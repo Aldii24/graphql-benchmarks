@@ -25,6 +25,10 @@ Explore and compare the performance of the fastest GraphQL frameworks through ou
 [async-graphql]: https://github.com/async-graphql/async-graphql
 [Hasura]: https://github.com/hasura/graphql-engine
 [GraphQL JIT]: https://github.com/zalando-incubator/graphql-jit
+[apollo_server]: https://github.com/apollographql/apollo-server
+[netflix_dgs]: https://github.com/netflix/dgs-framework
+[async_graphql]: https://github.com/async-graphql/async-graphql
+[graphql_jit]: https://github.com/zalando-incubator/graphql-jit
 
 ## Introduction
 
