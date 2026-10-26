@@ -1,36 +1,21 @@
 #!/bin/bash
+set -e
 
-# Update and install gnuplot
 sudo apt-get update && sudo apt-get install -y gnuplot
 
-# Remove existing results file
+npm install
+npm run build
+
 rm -f results.md
 
-services=("apollo" "caliban" "netflixdgs" "gqlgen" "tailcall" "async_graphql" "hasura" "graphql_jit")
-
-# Loop through each benchmark (1, 2, 3)
 for bench in 1 2 3; do
     echo "Processing files for bench${bench}:"
-    
-    # Construct the command for each benchmark
-    cmd="bash analyze.sh"
-    
-    # Loop through each service 
-    for service in "${services[@]}"; do
-        # Convert service name to match file naming convention 
-        case $service in
-            "apollo") file_service="apollo_server" ;;
-            "netflixdgs") file_service="netflix_dgs" ;;
-            *) file_service=$service ;;
-        esac
-        
-        # Add files for current service to the command
-        for run in 1 2 3; do
-            cmd+=" bench${bench}_result${run}_graphql_${file_service}_run.sh.txt"
-        done
-    done
-    
-    # Execute the command
-    echo "Executing: $cmd"
-    eval $cmd
+    files=(bench${bench}_*.txt)
+    if [[ -e "${files[0]}" ]]; then
+        cmd="node dist/analyze.js ${files[*]}"
+        echo "Running command: $cmd"
+        $cmd
+    else
+        echo "Warning: No files found for bench${bench}"
+    fi
 done
